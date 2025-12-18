@@ -9,7 +9,7 @@ from datetime import datetime
 # --- CONFIGURATION ---
 SCOPES = ['https://www.googleapis.com/auth/drive']
 SERVICE_ACCOUNT_FILE = 'service_account.json' # GitHub creates this for us
-FOLDER_ID = '1pjc5XlOdXFrQv8FchgguHBWq1-3GqEZ-' # <--- UPDATE THIS!
+FOLDER_ID = '1OJvqhuLYvD0O4Ts54IgHSNceU_fvQk1Q' # <--- UPDATE THIS!
 
 def authenticate():
     creds = service_account.Credentials.from_service_account_file(
