@@ -1,0 +1,39 @@
+name: Daily Costpoint Data Pipeline
+
+on:
+  schedule:
+    # Runs at 09:00 UTC every day
+    - cron: '0 9 * * *'
+  # Adds a "Run Now" button so you can test it immediately
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download your code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Install Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # 3. Install Google libraries
+      - name: Install Libraries
+        run: |
+          pip install pandas google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
+
+      # 4. Create the Key File from the Secret you just saved
+      - name: Create Auth File
+        env:
+          GDRIVE_CREDS: ${{ secrets.GDRIVE_CREDENTIALS }}
+        run: |
+          echo "$GDRIVE_CREDS" > service_account.json
+
+      # 5. Run the Script
+      - name: Run ETL Script
+        run: python automate_pipeline.py
